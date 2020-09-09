@@ -12,6 +12,7 @@ flask-sqlalchemy = "*"
 flask-script = "*"
 flask-migrate = "*"
 psycopg2-binary = "*"
+pymysql = "*"
 
 [requires]
 python_version = "3.7"
