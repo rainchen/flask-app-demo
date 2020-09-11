@@ -23,5 +23,19 @@ def create_db():
     print("create db: ", db_name)
     create_database(db_uri)
 
+# add cli command: flask test
+@app.cli.command()
+def test():
+    """Run test, same as running $ python -m unittest."""
+    # import os
+    # os.system("python -m unittest")
+
+    # same as executing unittest/__main__.py
+    __unittest = True
+    import sys
+    sys.argv = ['python' + " -m unittest"]
+    import unittest
+    unittest.main(module=None)
+
 if "__main__ " == __name__:
     manager.run()
