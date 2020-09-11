@@ -1,4 +1,5 @@
 from flask import request
+import sqlalchemy
 
 
 class BaseBluePrint(object):
@@ -6,6 +7,21 @@ class BaseBluePrint(object):
         self.app = app
 
     def register(self):
+        self.app.register_error_handler(Exception, self.error_handler)
+
         from api.blueprints.users import users_blueprint
 
         self.app.register_blueprint(users_blueprint)
+
+    def error_handler(self, err):
+        msg = "Request resulted in {}".format(err)
+
+        if isinstance(err, sqlalchemy.orm.exc.NoResultFound):
+            return self.handle_404_exception(err)
+        else:
+            self.app.logger.warning(msg, exc_info=err)
+            return {'msg': msg}, 500
+
+    def handle_404_exception(self, err):
+        msg = "Request resulted in {}".format(err)
+        return {'msg': msg}, 404
