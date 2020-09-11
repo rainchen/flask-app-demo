@@ -1,5 +1,6 @@
 from flask import request
 import sqlalchemy
+import werkzeug
 
 
 class BaseBluePrint(object):
@@ -16,7 +17,7 @@ class BaseBluePrint(object):
     def error_handler(self, err):
         msg = "Request resulted in {}".format(err)
 
-        if isinstance(err, sqlalchemy.orm.exc.NoResultFound):
+        if isinstance(err, (sqlalchemy.orm.exc.NoResultFound, werkzeug.exceptions.NotFound)):
             return self.handle_404_exception(err)
         else:
             self.app.logger.warning(msg, exc_info=err)
