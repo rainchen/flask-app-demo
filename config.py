@@ -21,6 +21,7 @@ class StagingConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     TESTING = True
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://root:@localhost/flask-app-demo-test?charset=utf8mb4"
 
 
 config = {
