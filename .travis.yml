@@ -1,0 +1,18 @@
+language: python
+dist: xenial
+python:
+  - 3.7
+services:
+  # MySQL 5.7 is the default on the Xenial 
+  - mysql
+env:
+  - FLASK_ENV=testing
+install:
+  - pip install pipenv
+  - pipenv install
+script:
+  - cp .env.sample .env
+  - flask create-db
+  - flask db upgrade
+  - flask routes
+  - flask test
