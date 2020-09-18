@@ -8,7 +8,14 @@ class TestApiUsers(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json, {'data': [], 'msg': 'ok'})
 
+        # DRY these lines of codes with one line
+        # from main import db
+        # user = User(username='admin', first_name='Ming', last_name='Li')
+        # db.session.add(user)
+        # db.session.commit()
+
         User.create(username='admin', first_name='Ming', last_name='Li')
+
         response = self.client.get("/users")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
