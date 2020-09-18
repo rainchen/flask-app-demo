@@ -1,25 +1,66 @@
-[![Build Status](https://travis-ci.com/kimbugp/flask_app.svg?branch=master)](https://travis-ci.com/kimbugp/flask_app)
-[![PyPI version](https://badge.fury.io/py/flask-app.svg)](https://badge.fury.io/py/flask-app)
-## __Flask App__ 
-A python package to create flask boiler plate code 
+[![Build Status](https://travis-ci.com/rainchen/flask-app-demo.svg?branch=master)](https://travis-ci.com/rainchen/flask-app-demo)
 
-## __Installing this app__
-* Run  `pip install flask-app`
+## Summary
 
-## __Usage__
-- Set up a virtual environment 
-- Create a new flask boilerplate, run
-    ```
-    flask-app [name_of_app] [-d destination directory]
-    ```
+A flask boilerplate demo for using flask-app
 
-- Update the .env file with the respective variables 
+## Install dependencies 
 
-- Source the .env file with `source .env`
-- Run `flask db init` to initialize  migration files
-- Run `flask db migrate` to create migrations
+- Run `pip install pipenv`
+- Run `pipenv install --dev`
 
+## Config
 
-## __Author__
+- `cp .env.sample .env`
+- Update the `.env` file with the respective variables 
 
-- Kimbugwe Simon Peter
+## Run db migration
+
+- Run `flask create-db` to create database
+- Run `flask db upgrade` to create table and apply migrations
+
+## Check routes
+
+- Run `flask routes`
+
+```
+Endpoint    Methods    Rule
+----------  ---------  -----------------------
+static      GET        /static/<path:filename>
+user.users  GET, POST  /users/
+user.users  GET        /users/<int:user_id>
+```
+
+## Run test
+
+- Run `flask test`
+
+## Run shell
+
+- Run `flask shell`
+
+```
+>>> from api.models import *
+>>> User.create(username='admin', first_name='Ming', last_name='Li')
+
+>>> User.query.count()
+1
+```
+
+## Run server in development mode
+
+- Run `flask run`
+
+```
+ * Serving Flask app "manage.py" (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 621-366-433
+```
+
+## Run server in production mode using WSGI server
+
+PENDING
