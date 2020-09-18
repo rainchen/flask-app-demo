@@ -9,6 +9,7 @@ from main import create_app
 
 from sqlalchemy_utils import create_database 
 from cli.test import test_command
+from cli.dev import dev_command
 
 config_name = getenv("FLASK_ENV", "production")
 app = create_app(config.get(config_name))
@@ -16,6 +17,7 @@ migrate = Migrate(app, db)
 manager = Manager(app)
 # add custom cli commands
 app.cli.add_command(test_command, "test")
+app.cli.add_command(dev_command, "dev")
 
 # add cli command: flask create-db
 @app.cli.command()

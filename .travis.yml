@@ -7,14 +7,30 @@ services:
   - mysql
 env:
   - FLASK_ENV=testing
+
+stages:
+  - test
+  - code_audit
+
 install:
   - pip install pipenv
   - pipenv install --dev
-script:
   - cp .env.sample .env
-  - flask create-db
-  - flask db upgrade
-  - flask routes
-  - flask test
-  # run integration tests
-  - python -m unittest tests/skip_test_liveserver.py
+
+jobs:
+  include:
+    - stage: test
+      script:
+        - flask create-db
+        - flask db upgrade
+        - flask routes
+        - flask test
+        # run integration tests
+        - python -m unittest tests/skip_test_liveserver.py
+
+    - stage: code_audit
+      script:
+        - flask dev
+        - flask dev lint
+        - flask dev format
+        - flask dev security_audit
