@@ -8,11 +8,14 @@ from config import config
 from main import create_app
 
 from sqlalchemy_utils import create_database 
+from cli.test import test_command
 
 config_name = getenv("FLASK_ENV", "production")
 app = create_app(config.get(config_name))
 migrate = Migrate(app, db)
 manager = Manager(app)
+# add custom cli commands
+app.cli.add_command(test_command, "test")
 
 # add cli command: flask create-db
 @app.cli.command()
@@ -22,20 +25,6 @@ def create_db():
     db_name = db.engine.url.database
     print("create db: ", db_name)
     create_database(db_uri)
-
-# add cli command: flask test
-@app.cli.command()
-def test():
-    """Run test, same as running $ python -m unittest."""
-    # import os
-    # os.system("python -m unittest")
-
-    # same as executing unittest/__main__.py
-    __unittest = True
-    import sys
-    sys.argv = ['python' + " -m unittest"]
-    import unittest
-    unittest.main(module=None)
 
 if "__main__ " == __name__:
     manager.run()
