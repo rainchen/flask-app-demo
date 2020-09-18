@@ -9,10 +9,12 @@ env:
   - FLASK_ENV=testing
 install:
   - pip install pipenv
-  - pipenv install
+  - pipenv install --dev
 script:
   - cp .env.sample .env
   - flask create-db
   - flask db upgrade
   - flask routes
   - flask test
+  # run integration tests
+  - python -m unittest tests/skip_test_liveserver.py
