@@ -67,7 +67,7 @@ PENDING
 
 ## Improve Python Code Quality
 
-## Run linter
+### Run linter
 
 run linter
 
@@ -86,4 +86,26 @@ config lowest lint score, useful for CI
 ```
 $ flask dev lint --lowest-score=8.0
 # $? will be none-zero if pylint_score is lower then lowest_score
+```
+
+### Run formatter
+
+reformats codes to follow the Google Python Style Guide
+
+```
+$ flask dev format
+
+Run formatter
+
+No changes needed.
+# $? will be non-zero if some files need to be changed
+```
+
+format codes and make changes to files in place
+
+```
+$ flask dev format --in-place
+
+Run formatter
+[NOTICE]Make changes to files in place!
 ```
