@@ -10,7 +10,14 @@
 
 # config lowest lint score, useful for CI
 # $ flask dev lint --lowest-score=8.0
-# $? will be none-zero if pylint_score is lower then lowest_score
+# $? will be non-zero if pylint_score is lower then lowest_score
+
+# format codes
+# $ flask dev format
+# $? will be non-zero if some files need to be changed
+
+# format codes and make changes to files in place
+# $ flask dev format --in-place
 
 from flask.cli import AppGroup
 import click
@@ -56,10 +63,23 @@ def lint(html_report, lowest_score):
             sys.exit(1)
 
 # [Google Python Style Guide](https://google.github.io/styleguide/pyguide.html)
-@dev_command.command('format')
-def format():
+@dev_command.command('format', help='Reformats codes to follow the Google Python Style Guide, returns zero exits status when no changes were necessary, non-zero otherwise.')
+@click.option('--in-place', default=False, is_flag=True, help='Make changes to files in place.')
+def format(in_place):
     """Format codes with [Google Python Style Guide]."""
-    print("run formatter")
+    click.echo(click.style("Run formatter", fg='green'))
+
+    yapf_opt = '--diff'
+    if in_place:
+        yapf_opt = '--in-place'
+        click.echo(click.style("[NOTICE]Make changes to files in place!", fg='yellow'))
+    yapf_cmd = 'yapf --style="{based_on_style: google}" %s --recursive **/*.py' % yapf_opt
+    import subprocess
+    proc = subprocess.run(yapf_cmd, shell=True)
+    click.echo(proc.stdout)
+    returncode = proc.returncode
+    # returns zero when no changes were necessary
+    sys.exit(returncode)
 
 @dev_command.command('security_audit')
 def security_audit():
