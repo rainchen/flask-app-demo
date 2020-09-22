@@ -64,3 +64,26 @@ user.users  GET        /users/<int:user_id>
 ## Run server in production mode using WSGI server
 
 PENDING
+
+## Improve Python Code Quality
+
+## Run linter
+
+run linter
+
+```
+$ flask dev lint
+```
+
+run linter and generate html report
+
+```
+$ flask dev lint --html-report=tmp/dev/report/pylint-report.html
+```
+
+config lowest lint score, useful for CI
+
+```
+$ flask dev lint --lowest-score=8.0
+# $? will be none-zero if pylint_score is lower then lowest_score
+```

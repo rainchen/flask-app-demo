@@ -6,7 +6,7 @@ services:
   # MySQL 5.7 is the default on the Xenial 
   - mysql
 env:
-  - FLASK_ENV=testing
+  - FLASK_ENV=testing FLASK_DEV_LINT_LOWEST_SCORE=3.0
 
 stages:
   - test
@@ -31,6 +31,6 @@ jobs:
     - stage: code_audit
       script:
         - flask dev
-        - flask dev lint
+        - flask dev lint --lowest-score=$FLASK_DEV_LINT_LOWEST_SCORE
         - flask dev format
         - flask dev security_audit
