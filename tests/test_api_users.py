@@ -3,6 +3,7 @@ from api.models import User
 
 
 class TestApiUsers(BaseTestCase):
+
     def test_list_users(self):
         response = self.client.get("/users")
         self.assertEqual(response.status_code, 200)
@@ -21,7 +22,7 @@ class TestApiUsers(BaseTestCase):
         self.assertEqual(
             response.json, {
                 'msg':
-                'ok',
+                    'ok',
                 'data': [{
                     'id': '234',
                     'username': 'admin',

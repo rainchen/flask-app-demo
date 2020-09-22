@@ -7,6 +7,7 @@ app = create_app(config.get("testing"))
 
 
 class BaseTestCase(TestCase):
+
     def create_app(self):
         app.config.from_object(config.get("testing"))
         return app
