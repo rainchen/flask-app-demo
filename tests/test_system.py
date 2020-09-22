@@ -3,7 +3,7 @@
 # import unittest
 
 # # Tips: run this case test only: python -m unittest tests/test_system.py
-# @unittest.skip('Not work with flask test') 
+# @unittest.skip('Not work with flask test')
 # class SkipTestSystem(TestCase, LiveServerTestCase):
 
 #     def create_app(self):

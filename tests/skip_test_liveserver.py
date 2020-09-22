@@ -3,6 +3,7 @@ from flask_testing import TestCase, LiveServerTestCase
 import unittest
 import requests
 
+
 # FIXME: make this can work with `flask test`, currently run this case test have to use: python -m unittest tests/skip_test_liveserver.py
 # @unittest.skip('Not work with flask test')
 class TestLiveserver(TestCase, LiveServerTestCase):
