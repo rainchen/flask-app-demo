@@ -45,7 +45,7 @@ APP_DIR = os.path.abspath(os.path.dirname(__file__) + "/..")
 )
 def lint(html_report, lowest_score):
     """Check coding style."""
-    click.echo(click.style("Run linter", fg='green'))
+    click.echo(click.style("Run linter", fg='cyan'))
 
     # prepare report dir
     report_dir = os.path.join(APP_DIR, "tmp/dev/report")
@@ -97,7 +97,7 @@ def lint(html_report, lowest_score):
               help='Make changes to files in place.')
 def format(in_place):
     """Format codes with [Google Python Style Guide]."""
-    click.echo(click.style("Run formatter", fg='green'))
+    click.echo(click.style("Run formatter", fg='cyan'))
 
     yapf_opt = '--diff'
     if in_place:
@@ -110,6 +110,8 @@ def format(in_place):
     click.echo(proc.stdout)
     returncode = proc.returncode
     # returns zero when no changes were necessary
+    if in_place == False and returncode == 0:
+        click.echo(click.style("No changes needed.", fg='green'))
     sys.exit(returncode)
 
 
