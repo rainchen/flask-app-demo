@@ -1,5 +1,6 @@
-from api.models.base_model import BaseModel
 from api.datab import db
+from api.models.base_model import BaseModel
+
 
 class User(BaseModel):
     __tablename__ = "users"

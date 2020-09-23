@@ -1,8 +1,7 @@
 from flask import Flask
-from api.datab import db
-
 
 from api.blueprints.base_blueprint import BaseBluePrint
+from api.datab import db
 
 
 def create_app(config_name):

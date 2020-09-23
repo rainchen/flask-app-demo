@@ -1,7 +1,9 @@
-from tests.base_test import app
-from flask_testing import TestCase, LiveServerTestCase
 import unittest
+
 import requests
+from flask_testing import LiveServerTestCase, TestCase
+
+from tests.base_test import app
 
 
 # FIXME: make this can work with `flask test`, currently run this case test have to use: python -m unittest tests/skip_test_liveserver.py

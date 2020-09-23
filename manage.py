@@ -2,14 +2,13 @@ from os import getenv
 
 from flask_migrate import Migrate
 from flask_script import Manager
+from sqlalchemy_utils import create_database
 
 from api.datab import db
+from cli.dev import dev_command
+from cli.test import test_command
 from config import config
 from main import create_app
-
-from sqlalchemy_utils import create_database 
-from cli.test import test_command
-from cli.dev import dev_command
 
 config_name = getenv("FLASK_ENV", "production")
 app = create_app(config.get(config_name))

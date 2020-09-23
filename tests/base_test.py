@@ -1,7 +1,8 @@
-from config import config
 from flask_testing import TestCase
+from sqlalchemy_utils import create_database, database_exists
+
+from config import config
 from main import create_app, db
-from sqlalchemy_utils import database_exists, create_database
 
 app = create_app(config.get("testing"))
 
