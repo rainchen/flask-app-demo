@@ -1,5 +1,5 @@
-from tests.base_test import BaseTestCase
 from api.models import User
+from tests.base_test import BaseTestCase
 
 
 class TestApiUsers(BaseTestCase):

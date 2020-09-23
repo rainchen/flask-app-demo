@@ -1,6 +1,6 @@
-from flask import request
 import sqlalchemy
 import werkzeug
+from flask import request
 
 
 class BaseBluePrint(object):

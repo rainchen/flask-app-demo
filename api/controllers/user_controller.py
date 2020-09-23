@@ -5,6 +5,7 @@ from flask import Response
 from api.controllers.base_controller import BaseController
 from api.models import User
 
+
 class UserController(BaseController):
     def get(self, *args, **kwargs):
         user_id = self.request.view_args.get("user_id")

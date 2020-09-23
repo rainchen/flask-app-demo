@@ -8,6 +8,7 @@ requests = "*"
 pylint = "*"
 pylint-report = "*"
 yapf = "*"
+isort = "*"
 
 [packages]
 flask = "*"
