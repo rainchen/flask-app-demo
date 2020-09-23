@@ -19,10 +19,12 @@
 # format codes and make changes to files in place
 # $ flask dev format --in-place
 
-from flask.cli import AppGroup
-import click
 import os
+import subprocess
 import sys
+
+import click
+from flask.cli import AppGroup
 
 dev_command = AppGroup(
     'dev',
@@ -100,19 +102,47 @@ def format(in_place):
     click.echo(click.style("Run formatter", fg='cyan'))
 
     yapf_opt = '--diff'
+    isort_opt = '--diff'
     if in_place:
         yapf_opt = '--in-place'
+        isort_opt = ''
         click.echo(
             click.style("[NOTICE]Make changes to files in place!", fg='yellow'))
-    yapf_cmd = 'yapf --style="{based_on_style: google}" %s --recursive **/*.py' % yapf_opt
-    import subprocess
-    proc = subprocess.run(yapf_cmd, shell=True)
-    click.echo(proc.stdout)
-    returncode = proc.returncode
+
+    sort_returncode, sort_stdout = _sort_imports(isort_opt)
+    click.echo(click.style('sort import check result:', fg='magenta'))
+    click.echo(sort_stdout)
+    if b'---' in sort_stdout:  # mark find changes
+        sort_returncode = 1
+
+    format_returncode, format_stdout = _format_codes(yapf_opt)
+    click.echo(click.style('format check result:', fg='magenta'))
+    if not format_stdout:
+        format_stdout = 'No problem was found'
+    click.echo(format_stdout)
+
+    returncode = (sort_returncode | format_returncode)
+    if not in_place:
+        if returncode == 0:
+            click.echo(click.style('No changes needed.', fg='green'))
+        else:
+            click.echo(click.style('Some changes needed.', fg='red'))
     # returns zero when no changes were necessary
-    if in_place == False and returncode == 0:
-        click.echo(click.style("No changes needed.", fg='green'))
     sys.exit(returncode)
+
+
+def _format_codes(yapf_opt):
+    """format codes using yapf CLI"""
+    yapf_cmd = 'yapf --style="{based_on_style: google}" %s --recursive **/*.py' % yapf_opt
+    proc = subprocess.run(yapf_cmd, shell=True, capture_output=True)
+    return proc.returncode, proc.stdout
+
+
+def _sort_imports(isort_opt=''):
+    """sort imports using isort CLI"""
+    isort_cmd = 'isort  %s .' % isort_opt
+    proc = subprocess.run(isort_cmd, shell=True, capture_output=True)
+    return proc.returncode, proc.stdout
 
 
 @dev_command.command('security_audit')
