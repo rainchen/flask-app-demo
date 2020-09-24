@@ -55,13 +55,16 @@ def lint(html_report, lowest_score):
 
     os.system('pylint --version')
     click.echo("Linter Report:")
-    os.system('pylint **/*.py --output-format=colorized')
+    # rcfile download from https://google.github.io/styleguide/pylintrc
+    pylint_cli = 'pylint --rcfile=devtools/google-pyguide.pylintrc'
+    os.system(pylint_cli + ' **/*.py --output-format=colorized')
 
     # genreate pylint-report.json
     if (html_report != None) or (lowest_score != None):
         # TODO: run pylint once only
         os.system(
-            'pylint --load-plugins=pylint_report.pylint_report --output-format=pylint_report.pylint_report.CustomJsonReporter **/*.py > tmp/dev/report/pylint-report.json'
+            pylint_cli +
+            ' --load-plugins=pylint_report.pylint_report --output-format=pylint_report.pylint_report.CustomJsonReporter **/*.py > tmp/dev/report/pylint-report.json'
         )
 
     # generate a html report with https://github.com/drdv/pylint-report
