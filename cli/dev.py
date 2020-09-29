@@ -135,7 +135,7 @@ def format(in_place):
 def _format_codes(yapf_opt):
   """format codes using yapf CLI"""
   # consisting with pylint that using google style for indent_width: 2
-  yapf_cmd = 'yapf --style="{based_on_style: google, indent_width: 2}" %s --recursive **/*.py' % yapf_opt
+  yapf_cmd = 'yapf --style="{based_on_style: google, indent_width: 2}" %s --recursive .' % yapf_opt
   proc = subprocess.run(yapf_cmd, shell=True, capture_output=True)  # nosec
   return proc.returncode, proc.stdout
 

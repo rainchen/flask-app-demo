@@ -18,14 +18,16 @@ manager = Manager(app)
 app.cli.add_command(test_command, "test")
 app.cli.add_command(dev_command, "dev")
 
+
 # add cli command: flask create-db
 @app.cli.command()
 def create_db():
-    """Create the configured database."""
-    db_uri = config.get(config_name).SQLALCHEMY_DATABASE_URI
-    db_name = db.engine.url.database
-    print("create db: ", db_name)
-    create_database(db_uri)
+  """Create the configured database."""
+  db_uri = config.get(config_name).SQLALCHEMY_DATABASE_URI
+  db_name = db.engine.url.database
+  print("create db: ", db_name)
+  create_database(db_uri)
+
 
 if "__main__ " == __name__:
-    manager.run()
+  manager.run()
