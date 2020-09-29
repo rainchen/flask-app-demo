@@ -136,14 +136,14 @@ def _format_codes(yapf_opt):
   """format codes using yapf CLI"""
   # consisting with pylint that using google style for indent_width: 2
   yapf_cmd = 'yapf --style="{based_on_style: google, indent_width: 2}" %s --recursive **/*.py' % yapf_opt
-  proc = subprocess.run(yapf_cmd, shell=True, capture_output=True)
+  proc = subprocess.run(yapf_cmd, shell=True, capture_output=True)  # nosec
   return proc.returncode, proc.stdout
 
 
 def _sort_imports(isort_opt=''):
   """sort imports using isort CLI"""
   isort_cmd = 'isort  %s .' % isort_opt
-  proc = subprocess.run(isort_cmd, shell=True, capture_output=True)
+  proc = subprocess.run(isort_cmd, shell=True, capture_output=True)  # nosec
   return proc.returncode, proc.stdout
 
 
@@ -172,10 +172,11 @@ def security_audit(html_report, debug):
 
   if debug != None:
     click.echo('execute cmd: $ %s' % bandit_cmd)
-  proc = subprocess.run(bandit_cmd,
-                        shell=True,
-                        capture_output=capture_output,
-                        universal_newlines=True)
+  proc = subprocess.run(
+      bandit_cmd,
+      shell=True,  # nosec
+      capture_output=capture_output,
+      universal_newlines=True)
 
   if html_report != None:
     report = open(html_report, "w")
