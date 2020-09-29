@@ -136,18 +136,59 @@ def _format_codes(yapf_opt):
   """format codes using yapf CLI"""
   # consisting with pylint that using google style for indent_width: 2
   yapf_cmd = 'yapf --style="{based_on_style: google, indent_width: 2}" %s --recursive **/*.py' % yapf_opt
-  proc = subprocess.run(yapf_cmd, shell=True, capture_output=True)
+  proc = subprocess.run(yapf_cmd, shell=True, capture_output=True)  # nosec
   return proc.returncode, proc.stdout
 
 
 def _sort_imports(isort_opt=''):
   """sort imports using isort CLI"""
   isort_cmd = 'isort  %s .' % isort_opt
-  proc = subprocess.run(isort_cmd, shell=True, capture_output=True)
+  proc = subprocess.run(isort_cmd, shell=True, capture_output=True)  # nosec
   return proc.returncode, proc.stdout
 
 
 @dev_command.command('security_audit')
-def security_audit():
+@click.option(
+    '--html-report',
+    default=None,
+    help=
+    'Genereate html report, e.g. --html-report=tmp/dev/report/bandit-report.html'
+)
+@click.option('--debug',
+              default=None,
+              is_flag=True,
+              help='Show more info for debugging')
+def security_audit(html_report, debug):
   """Code security audit."""
-  print("run security audit")
+  click.echo(click.style("Run security audit", fg='cyan'))
+
+  bandit_opt = '--recursive . --ini devtools/bandit.ini'
+  capture_output = False  # don't capture output to show colorize output in Shell
+  if html_report != None:
+    bandit_opt += ' --format html'
+    capture_output = True
+
+  bandit_cmd = 'bandit %s' % bandit_opt
+
+  if debug != None:
+    click.echo('execute cmd: $ %s' % bandit_cmd)
+  proc = subprocess.run(
+      bandit_cmd,
+      shell=True,  # nosec
+      capture_output=capture_output,
+      universal_newlines=True)
+
+  if html_report != None:
+    report = open(html_report, "w")
+    report.write(proc.stdout)
+    report.close()
+
+    click.echo('Generate a html report to %s' % html_report)
+
+  # show audit result
+  if proc.returncode == 0:
+    click.echo(click.style('No security issues found.', fg='green'))
+  else:
+    click.echo(click.style('Found some security issues.', fg='red'))
+
+  sys.exit(proc.returncode)

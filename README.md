@@ -109,3 +109,16 @@ $ flask dev format --in-place
 Run formatter
 [NOTICE]Make changes to files in place!
 ```
+
+### Run security audit
+
+```
+$ flask dev security_audit
+# $? will be non-zero if found security issues
+```
+
+run security audit and generate html report
+
+```
+$ flask dev security_audit --html-report=tmp/dev/report/bandit-report.html
+```
