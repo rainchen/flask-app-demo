@@ -148,6 +148,46 @@ def _sort_imports(isort_opt=''):
 
 
 @dev_command.command('security_audit')
-def security_audit():
+@click.option(
+    '--html-report',
+    default=None,
+    help=
+    'Genereate html report, e.g. --html-report=tmp/dev/report/bandit-report.html'
+)
+@click.option('--debug',
+              default=None,
+              is_flag=True,
+              help='Show more info for debugging')
+def security_audit(html_report, debug):
   """Code security audit."""
-  print("run security audit")
+  click.echo(click.style("Run security audit", fg='cyan'))
+
+  bandit_opt = '--recursive . --ini devtools/bandit.ini'
+  capture_output = False  # don't capture output to show colorize output in Shell
+  if html_report != None:
+    bandit_opt += ' --format html'
+    capture_output = True
+
+  bandit_cmd = 'bandit %s' % bandit_opt
+
+  if debug != None:
+    click.echo('execute cmd: $ %s' % bandit_cmd)
+  proc = subprocess.run(bandit_cmd,
+                        shell=True,
+                        capture_output=capture_output,
+                        universal_newlines=True)
+
+  if html_report != None:
+    report = open(html_report, "w")
+    report.write(proc.stdout)
+    report.close()
+
+    click.echo('Generate a html report to %s' % html_report)
+
+  # show audit result
+  if proc.returncode == 0:
+    click.echo(click.style('No security issues found.', fg='green'))
+  else:
+    click.echo(click.style('Found some security issues.', fg='red'))
+
+  sys.exit(proc.returncode)

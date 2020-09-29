@@ -9,6 +9,7 @@ pylint = "*"
 pylint-report = "*"
 yapf = "*"
 isort = "*"
+bandit = "*"
 
 [packages]
 flask = "*"
