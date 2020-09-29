@@ -13,4 +13,4 @@ user = UserController(request)
 @users_blueprint.route("/", methods=["POST", "GET"])
 @users_blueprint.route("/<int:user_id>", methods=["GET"])
 def users(**kwargs):
-    return user(request)
+  return user(request)
