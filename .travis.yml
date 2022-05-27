@@ -13,7 +13,7 @@ stages:
   - code_audit
 
 install:
-  - pip install pipenv && pipenv --version
+  - pip install pipenv==2022.5.2 && pipenv --version
   - pipenv install --dev
   - cp .env.sample .env
 
