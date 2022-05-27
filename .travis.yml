@@ -6,7 +6,7 @@ services:
   # MySQL 5.7 is the default on the Xenial 
   - mysql
 env:
-  - FLASK_ENV=testing FLASK_DEV_LINT_LOWEST_SCORE=5.0
+  - FLASK_ENV=testing FLASK_DEV_LINT_LOWEST_SCORE=6.0
 
 stages:
   - test
