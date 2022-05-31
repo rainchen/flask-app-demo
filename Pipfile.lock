@@ -561,7 +561,9 @@
         },
         "pylint-report": {
             "hashes": [
-                "sha256:48a8076da253b97e1ac9d9110d224e32ca223a9d5cc3274cb3259c23926988c3"
+                "sha256:48a8076da253b97e1ac9d9110d224e32ca223a9d5cc3274cb3259c23926988c3",
+                "sha256:9f8937af8dd1da250a67a36e1170aac79661fc6d3c34140683771256b8a5dd0d",
+                "sha256:aa3777efaf4aab300c6cb2c7b0c2842103346351d43f712b52a89f771fc5b4b5"
             ],
             "index": "pypi",
             "version": "==0.2.1"
