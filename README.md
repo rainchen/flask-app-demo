@@ -14,6 +14,18 @@ A flask boilerplate demo for using flask-app
 - `cp .env.sample .env`
 - Update the `.env` file with the respective variables 
 
+## Activate Pipenv shell
+
+```
+$ pipenv shell
+
+# call flask CLI in the shell
+$ flask --version
+Python 3.7.7
+Flask 1.1.2
+Werkzeug 1.0.1
+```
+
 ## Run db migration
 
 - Run `flask create-db` to create database
@@ -121,4 +133,56 @@ run security audit and generate html report
 
 ```
 $ flask dev security_audit --html-report=tmp/dev/report/bandit-report.html
+```
+
+
+## Package management
+
+manage packages with pipenv and Pipfile
+
+### Show installed packages
+
+```
+# displays currently-installed dependency graph information in Pipfile.lock
+$ pipenv graph
+
+# list required packages in requirements format
+$ pipenv run pip freeze
+```
+
+### Add a new package
+
+```
+$ pipenv install [--dev] <package>~=major.minor
+# e.g.: 
+$ pipenv install --dev pylint-report~=0.1.8
+```
+
+### Upgrade a package
+
+```
+# upgrade a package in Pipfile
+$ pipenv install --keep-outdated [--dev] <package>~=x.y.z
+# e.g.:
+$ pipenv install --keep-outdated --dev pylint-report==0.1.8
+
+# upgrade a package and auto update Pipfile.lock
+$ pipenv update --keep-outdated <pkg>
+# e.g.:
+$ pipenv update --keep-outdated pylint-report
+```
+
+just update Pipfile.lock for the  new package requirements
+
+```
+# records the new requirements to the Pipfile.lock file
+# pipenv lock --keep-outdated
+```
+
+*NOTES: DO NOT update Pipfile.lock manually, should always update it by running `pipenv` command*
+
+### Remove a package
+
+```
+$ pipenv uninstall --keep-outdated <package>
 ```

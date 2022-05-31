@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 requests = "*"
 pylint = "*"
-pylint-report = "*"
+pylint-report = "==0.2.1"
 yapf = "*"
 isort = "*"
 bandit = "*"
