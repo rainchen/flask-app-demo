@@ -10,6 +10,7 @@ pylint-report = "==0.2.1"
 yapf = "*"
 isort = "*"
 bandit = "*"
+license-sh = "1.0.25"
 
 [packages]
 flask = "*"

@@ -135,6 +135,13 @@ run security audit and generate html report
 $ flask dev security_audit --html-report=tmp/dev/report/bandit-report.html
 ```
 
+### Run license audit
+
+```
+$ flask dev license_compliance_audit
+```
+
+*Tips: this command can be used in CI jobs, by giving a return code of zero for success or non-zero for failures (e.g. GPL-licensed packages detected when specified to not permit GPL)*
 
 ## Package management
 

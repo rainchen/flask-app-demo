@@ -192,3 +192,22 @@ def security_audit(html_report, debug):
     click.echo(click.style('Found some security issues.', fg='red'))
 
   sys.exit(proc.returncode)
+
+@dev_command.command(
+    'license_compliance_audit',
+    help='Check license compliance of 3rd party dependencies.'
+)
+def license_compliance_audit():
+  """open source license compliance"""
+  # popular licenses table: https://choosealicense.com/appendix/
+  # popular licenses list: https://choosealicense.com/licenses/
+  # licenses approved by the OSI: https://opensource.org/licenses/alphabetical
+  click.echo(click.style("Check open source license compliance according to config .license-sh.json.", fg='cyan'))
+  cmd = 'license-sh'
+  proc = subprocess.run(cmd, shell=True, capture_output=False)
+  if proc.returncode == 0:
+    click.echo(click.style("Audit Passed!", fg='green'))
+  else:
+    click.echo(click.style("Audit Failed!", fg='red'))
+    click.echo(click.style("Use alternative packages or set these packages as ignored_packages/whitelist in config .license-sh.json.", fg='cyan'))
+    sys.exit(proc.returncode)

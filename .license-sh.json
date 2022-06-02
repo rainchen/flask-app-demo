@@ -1,0 +1,36 @@
+{
+  "ignored_packages": {
+    "pipenv": [
+      "bandit",
+      "GitPython",
+      "pbr",
+      "zipp",
+      "prompt-toolkit",
+      "python-dotenv",
+      "setuptools",
+      "tomli",
+      "idna",
+      "importlib-metadata",
+      "waitress",
+      "typing-extensions",
+      "stevedore",
+      "importlib-resources",
+      "python-dateutil",
+      "platformdirs"
+    ]
+  },
+  "whitelist": [
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "BSD",
+    "MPL-2.0",
+    "3-clause BSD",
+    "\"MIT\"",
+    "Python-2.0",
+    "BSD (3 clause)",
+    "Expat license",
+    "Apache",
+    "MIT"
+  ]
+}
