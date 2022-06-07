@@ -16,6 +16,8 @@
       "stevedore",
       "importlib-resources",
       "python-dateutil",
+      "astroid",
+      "pylint",
       "platformdirs"
     ]
   },
