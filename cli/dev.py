@@ -19,6 +19,9 @@
 # format codes and make changes to files in place
 # $ flask dev format --in-place
 
+# pip package license compliance audit
+# $ flask dev license_compliance_audit
+
 import os
 from os import getenv
 import subprocess
@@ -223,5 +226,6 @@ def license_compliance_audit():
     for x in filtered_audit_result:
       table.add_row([x['Name'], x['Version'], x['License']])
     click.echo(table)
+    click.echo(click.style("Run `pipenv graph` to displays currently-installed dependency graph in a tree view.", fg='cyan'))
     click.echo(click.style("Use alternative packages or set these packages as ignored_packages/whitelist in config .env.", fg='cyan'))
     sys.exit(1)
