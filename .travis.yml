@@ -34,3 +34,4 @@ jobs:
         - flask dev lint --lowest-score=$FLASK_DEV_LINT_LOWEST_SCORE
         - flask dev format
         - flask dev security_audit
+        - flask dev license_compliance_audit
