@@ -1,7 +1,6 @@
 from os import getenv
 
 from flask_migrate import Migrate
-from flask_script import Manager
 from sqlalchemy_utils import create_database
 
 from api.datab import db
@@ -13,7 +12,6 @@ from main import create_app
 config_name = getenv("FLASK_ENV", "production")
 app = create_app(config.get(config_name))
 migrate = Migrate(app, db)
-manager = Manager(app)
 # add custom cli commands
 app.cli.add_command(test_command, "test")
 app.cli.add_command(dev_command, "dev")
@@ -30,4 +28,4 @@ def create_db():
 
 
 if "__main__ " == __name__:
-  manager.run()
+  app.run()
