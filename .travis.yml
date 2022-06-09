@@ -13,7 +13,8 @@ stages:
   - code_audit
 
 install:
-  - pip install pipenv==2022.5.2 && pipenv --version
+  - pip install -r requirements.txt
+  - pipenv --version
   - pipenv install --dev
   - cp .env.sample .env
 
@@ -34,4 +35,5 @@ jobs:
         - flask dev lint --lowest-score=$FLASK_DEV_LINT_LOWEST_SCORE
         - flask dev format
         - flask dev security_audit
+        # - pipenv check
         - flask dev license_compliance_audit
