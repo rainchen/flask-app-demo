@@ -1,0 +1,5 @@
+# copy this file as .envrc to let environment variables can be load into shell by using direnv
+
+# set a pypi mirror url for pipenv
+export PIPENV_PYPI_MIRROR=https://pypi.tuna.tsinghua.edu.cn/simple/
+# export PIPENV_PYPI_MIRROR=http://mirrors.aliyun.com/pypi/simple/
