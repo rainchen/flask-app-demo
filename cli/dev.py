@@ -22,15 +22,15 @@
 # pip package license compliance audit
 # $ flask dev license_compliance_audit
 
+import json
 import os
-from os import getenv
 import subprocess
 import sys
-import json
-from prettytable import PrettyTable
+from os import getenv
 
 import click
 from flask.cli import AppGroup
+from prettytable import PrettyTable
 
 dev_command = AppGroup(
     'dev',
@@ -199,24 +199,32 @@ def security_audit(html_report, debug):
 
   sys.exit(proc.returncode)
 
-@dev_command.command(
-    'license_compliance_audit',
-    help='Check license compliance of 3rd party dependencies.'
-)
+
+@dev_command.command('license_compliance_audit',
+                     help='Check license compliance of 3rd party dependencies.')
 def license_compliance_audit():
   """open source license compliance"""
   # popular licenses table: https://choosealicense.com/appendix/
   # popular licenses list: https://choosealicense.com/licenses/
   # licenses approved by the OSI: https://opensource.org/licenses/alphabetical
-  click.echo(click.style("Check open source license compliance according to config in .env", fg='cyan'))
+  click.echo(
+      click.style(
+          "Check open source license compliance according to config in .env",
+          fg='cyan'))
   cmd = 'pip-licenses --order=license --format=json'
-  allowed_licenses = getenv("FLASK_DEV_LICENSE_COMPLIANCE_AUDIT_ALLOWED_LICENSES", "").split(",")
-  ignored_packages = getenv("FLASK_DEV_LICENSE_COMPLIANCE_AUDIT_IGNORED_PACKAGES", "").split(",")
+  allowed_licenses = getenv(
+      "FLASK_DEV_LICENSE_COMPLIANCE_AUDIT_ALLOWED_LICENSES", "").split(",")
+  ignored_packages = getenv(
+      "FLASK_DEV_LICENSE_COMPLIANCE_AUDIT_IGNORED_PACKAGES", "").split(",")
   proc = subprocess.run(cmd, shell=True, capture_output=True)
   if proc.returncode == 0:
     audit_result = json.loads(proc.stdout)
     # filter out licenses which x['License'] neither in allowed_licenses nor x['Name'] not in ignored_packages, x['License'] could be a string combined with "; "
-    filtered_audit_result = [x for x in audit_result if (not all(i in allowed_licenses for i in x['License'].split("; ")) and x['Name'] not in ignored_packages)]    
+    filtered_audit_result = [
+        x for x in audit_result
+        if (not all(i in allowed_licenses for i in x['License'].split("; ")) and
+            x['Name'] not in ignored_packages)
+    ]
   if len(filtered_audit_result) == 0:
     click.echo(click.style("Audit Passed!", fg='green'))
   else:
@@ -226,6 +234,12 @@ def license_compliance_audit():
     for x in filtered_audit_result:
       table.add_row([x['Name'], x['Version'], x['License']])
     click.echo(table)
-    click.echo(click.style("Run `pipenv graph` to displays currently-installed dependency graph in a tree view.", fg='cyan'))
-    click.echo(click.style("Use alternative packages or set these packages as ignored_packages/whitelist in config .env.", fg='cyan'))
+    click.echo(
+        click.style(
+            "Run `pipenv graph` to displays currently-installed dependency graph in a tree view.",
+            fg='cyan'))
+    click.echo(
+        click.style(
+            "Use alternative packages or set these packages as ignored_packages/whitelist in config .env.",
+            fg='cyan'))
     sys.exit(1)
