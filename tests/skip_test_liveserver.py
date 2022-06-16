@@ -12,7 +12,9 @@ class TestLiveserver(TestCase, LiveServerTestCase):
 
   def create_app(self):
     # Set to 0 to have the OS pick the port.
-    app.config['LIVESERVER_PORT'] = 0
+    # FIXME: Failed to start the server after 5 seconds. is triggered when setting LIVESERVER_PORT to 0
+    # refs: https://github.com/jarus/flask-testing/issues/155
+    app.config['LIVESERVER_PORT'] = 6000
     # Default timeout is 5 seconds
     app.config['LIVESERVER_TIMEOUT'] = 10
     return app
