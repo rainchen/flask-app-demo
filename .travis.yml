@@ -24,10 +24,12 @@ jobs:
       script:
         - flask create-db
         - flask db upgrade
+        - flask db current
         - flask routes
-        - flask test
         # run integration tests
         - python -m unittest tests/skip_test_liveserver.py
+        # run unit tests and auto clear db tables
+        - flask test
 
     - stage: code_audit
       script:
