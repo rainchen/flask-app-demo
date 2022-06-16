@@ -11,6 +11,7 @@ from tests.base_test import app
 class TestLiveserver(TestCase, LiveServerTestCase):
 
   def create_app(self):
+    # app.config['TESTING'] = True
     # Set to 0 to have the OS pick the port.
     # FIXME: Failed to start the server after 5 seconds. is triggered when setting LIVESERVER_PORT to 0
     # refs: https://github.com/jarus/flask-testing/issues/155
@@ -28,4 +29,9 @@ class TestLiveserver(TestCase, LiveServerTestCase):
 
     # request static file
     response = requests.get(root_url + "/static/flask-logo.png")
+    self.assertEqual(response.status_code, 200)
+
+    # request dynamic data
+    # before step: pipenv run env FLASK_ENV=testing flask db upgrade
+    response = requests.get(root_url + "/users")
     self.assertEqual(response.status_code, 200)
