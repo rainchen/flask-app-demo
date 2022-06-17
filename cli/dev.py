@@ -216,7 +216,7 @@ def license_compliance_audit():
       "FLASK_DEV_LICENSE_COMPLIANCE_AUDIT_ALLOWED_LICENSES", "").split(",")
   ignored_packages = getenv(
       "FLASK_DEV_LICENSE_COMPLIANCE_AUDIT_IGNORED_PACKAGES", "").split(",")
-  proc = subprocess.run(cmd, shell=True, capture_output=True)
+  proc = subprocess.run(cmd, shell=True, capture_output=True)  # nosec
   if proc.returncode == 0:
     audit_result = json.loads(proc.stdout)
     # filter out licenses which x['License'] neither in allowed_licenses nor x['Name'] not in ignored_packages, x['License'] could be a string combined with "; "
