@@ -13,7 +13,8 @@ stages:
   - code_audit
 
 install:
-  - pip install pipenv==2022.5.2 && pipenv --version
+  - pip install -r requirements.txt
+  - pipenv --version
   - pipenv install --dev
   - cp .env.sample .env
 
@@ -23,10 +24,12 @@ jobs:
       script:
         - flask create-db
         - flask db upgrade
+        - flask db current
         - flask routes
-        - flask test
         # run integration tests
         - python -m unittest tests/skip_test_liveserver.py
+        # run unit tests and auto clear db tables
+        - flask test
 
     - stage: code_audit
       script:
@@ -34,3 +37,5 @@ jobs:
         - flask dev lint --lowest-score=$FLASK_DEV_LINT_LOWEST_SCORE
         - flask dev format
         - flask dev security_audit
+        # - pipenv check
+        - flask dev license_compliance_audit
