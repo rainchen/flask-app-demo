@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/rainchen/flask-app-demo.svg?branch=master)](https://travis-ci.com/rainchen/flask-app-demo)
+[![Build Status](https://app.travis-ci.com/rainchen/flask-app-demo.svg?branch=master)](https://app.travis-ci.com/rainchen/flask-app-demo)
 
 ## Summary
 
